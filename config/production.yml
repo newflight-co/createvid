@@ -1,0 +1,39 @@
+$include: ./common.yml
+
+logs:
+  sentry:
+    $env: SENTRY_URL
+  level: debug
+  format: simple
+
+server:
+  app_endpoint:
+    $env: APP_ENDPOINT
+  port: 8000
+
+render:
+  type: nexrender
+  tasksDir:
+    $resolvePath: ../temp
+
+auth:
+  idSecret: "top secret1"
+  accessSecret: "secret1"
+
+#rabbitmq credentials
+queue:
+  url:
+    $env: QUEUE_URL
+  opts:
+    cert:
+      $env: QUEUE_CERT
+    key:
+      $env: QUEUE_KEY
+    passphrase:
+      $env: QUEUE_PASSPHRASE
+    ca:
+    - $env: QUEUE_CA
+
+database:
+  connectionString:
+    $env: DATABASE_URL

@@ -1,0 +1,22 @@
+{
+  "name": "@createvid/common",
+  "version": "1.0.0",
+  "description": "Createvid common package",
+  "module": "src/index.js",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "Mateusz <mateusz@rssak.biz>",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "@codecat/config": "2.1.0",
+    "@google-cloud/storage": "2.5.0",
+    "@hapi/joi": "16.1.7",
+    "amqplib": "0.5.5",
+    "bluebird": "3.5.5",
+    "lodash": "4.17.15",
+    "moment": "2.24.0",
+    "pg": "7.12.1",
+    "winston": "3.2.1"
+  }
+}

@@ -1,0 +1,22 @@
+// app global css
+
+body {
+    background-image: linear-gradient(to bottom, #f6f6f6, #f3f3f3, #f1f1f1, #eeeeee, #ececec);
+}
+
+.link {
+    text-decoration: none;
+
+    &:active {
+        color: inherit;
+    }
+}
+
+.animate-spin
+  animation q-spin 2s infinite linear /* rtl:ignore */
+
+@keyframes q-spin
+  0%
+    transform rotate(0deg) /* rtl:ignore */
+  100%
+    transform rotate(359deg) /* rtl:ignore */

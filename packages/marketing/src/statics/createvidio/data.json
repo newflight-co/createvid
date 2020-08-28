@@ -1,0 +1,42 @@
+{
+    "title": "Data driven personalised video - createvidio",
+    "headline": "Data driven video generation.",
+    "subHeadline": "Put your audience first, create personalised and targeted videos individually or in their thousands.",
+    "headerImageUrl": "/statics/createvidio/people.jpg",
+    "headerBkgUrl": "/statics/createvidio/bkg.svg",
+    "headerMaskUrl": "/statics/createvidio/mask.svg",
+    "contentHeadline": "Generate bespoke videos for your business.",
+    "overviewHeading": "Deliver the right message at the right time.",
+    "overview": "With createvidio, you can create hundreds of videos at a time or individual videos on demand through our online interface. We can tailor existing videos or create new templates to use, so you can always say the right things in the most engaging way.",
+    "subscribeURL": "",
+    "features": [
+        {
+            "title": "Prospect Videos",
+            "content": "Sales prospects love seeing thier name, their brand and your consideration in any pitch. Create videos that resonate with them.",
+            "icon": {
+                "type": "icon",
+                "name": "person_pin"
+            }
+        },
+        {
+            "title": "Targeted Advertising",
+            "content": "Creating hundreds of ads for different segments would be impossible, until now. Create videos for individual targeting and split testing across social, web and email.",
+            "icon": {
+                "type": "icon",
+                "name": "filter_center_focus"
+            }
+        },
+        {
+            "title": "Communications",
+            "content": "Being able to communicate through video to each and every customer gives your brand a personal touch. Create videos based on purchases, interests or historic data, personalised to every customer.",
+            "icon": {
+                "type": "icon",
+                "name": "email"
+            }
+        }
+    ],
+    "ctaBtn": "Notify Me",
+    "cta": "Start creating videos for your business on demand.",
+    "emailWebHook": "https://hooks.zapier.com/hooks/catch/1853697/obqkfc6/",
+    "footerCopy": "Built by film makers and developers at NewFlight"
+}

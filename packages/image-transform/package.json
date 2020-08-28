@@ -1,0 +1,16 @@
+{
+  "name": "@createvid/image-transform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Mateusz Russak",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "chai": "4.2.0",
+    "gm": "1.23.1",
+    "mocha": "6.2.2"
+  }
+}

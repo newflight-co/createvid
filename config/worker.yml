@@ -1,0 +1,22 @@
+$include: ./common.yml
+
+logs:
+  sentry: <sentry_url>
+  level: debug
+  format: simple
+
+render:
+  type: nexrender
+  tasksDir:
+    $resolvePath: ../temp
+
+queue:
+  url: amqp://<main_server_url>:5672/
+  opts:
+    cert:
+      $resolvePath: ../keys/cert.pem
+    key:
+      $resolvePath: ../keys/key.pem
+    passphrase:
+    ca:
+    - $resolvePath: ../keys/cacert.pem

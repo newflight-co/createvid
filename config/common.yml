@@ -1,0 +1,50 @@
+#templates file needs to be defined before running application
+$include: ./templates.js
+
+logs:
+  level: debug
+  format: simple
+
+server:
+  app_endpoint: http://localhost:8080/
+  port: 8000
+
+database:
+  user: createvid
+  host: localhost
+  database: createvid
+  password: example
+  port: 5432
+
+#rabbitmq credentials
+queue:
+  url: amqp://localhost
+
+auth:
+  idSecret: "top secret1"
+  accessSecret: "secret1"
+
+mailing:
+  sendgrid_key: <sendgrid_key>
+
+render:
+  type: fakerender
+  tasksDir:
+    $resolvePath: ../temp
+
+cdn: <cdn_url>
+
+file_storage: gcloud_storage
+gcloud_storage:
+  project:
+    $env: GC_PROJECT
+  bucket:
+    $env: GCS_BUCKET
+  keyFilename:
+    $resolvePath: <key_file_for_gc>
+
+render_temp_dir:
+  $resolvePath: ../temp
+
+templates_directory:
+  $resolvePath: ../templates

@@ -1,0 +1,10 @@
+$include: ./common.yml
+
+render:
+  type: fakerender
+  tasksDir:
+    $resolvePath: ../temp
+
+queue:
+  url:
+    $env: QUEUE_URL

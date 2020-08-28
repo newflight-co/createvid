@@ -1,0 +1,47 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/esm.js",
+    "test": "mocha -r esm",
+    "test:ci": "mocha -r esm",
+    "dev": "nodemon -w src/ -e js src/esm.js",
+    "lint": "eslint .",
+    "lint:ci": "eslint ."
+  },
+  "bin": {
+    "createvid": "./bin/renderer"
+  },
+  "author": "",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "@createvid/common": "1.0.0",
+    "@createvid/image-transform": "1.0.0",
+    "@nexrender/action-copy": "1.5.7",
+    "@nexrender/action-encode": "1.5.8",
+    "@nexrender/core": "1.8.2",
+    "bluebird": "3.5.5",
+    "commander": "3.0.0",
+    "esm": "3.2.25",
+    "file-url": "3.0.0",
+    "mime": "2.4.4",
+    "pg": "7.12.1",
+    "socket.io": "2.2.0",
+    "socket.io-client": "2.2.0"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "eslint": "6.6.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-security": "1.4.0",
+    "mocha": "6.2.2",
+    "nodemon": "1.19.1",
+    "sinon": "7.5.0",
+    "sinon-chai": "3.3.0"
+  }
+}
