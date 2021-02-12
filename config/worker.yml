@@ -1,7 +1,8 @@
 $include: ./common.yml
 
 logs:
-  sentry: <sentry_url>
+  sentry: 
+    $env: SENTRY_URL
   level: debug
   format: simple
 
@@ -11,7 +12,8 @@ render:
     $resolvePath: ../temp
 
 queue:
-  url: amqp://<main_server_url>:5672/
+  url: 
+    $env: QUEUE_URL
   opts:
     cert:
       $resolvePath: ../keys/cert.pem
