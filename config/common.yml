@@ -21,18 +21,22 @@ queue:
   url: amqp://localhost
 
 auth:
-  idSecret: "top secret1"
-  accessSecret: "secret1"
-
+  idSecret: 
+    $env: AUTH_ID_SECRET 
+  accessSecret: 
+    $env: AUTH_ACCESS_SECRET
+    
 mailing:
-  sendgrid_key: <sendgrid_key>
+  sendgrid_key: 
+    $env: SENDGRID_KEY
 
 render:
   type: fakerender
   tasksDir:
     $resolvePath: ../temp
 
-cdn: <cdn_url>
+cdn:
+  $env: CDN_URL
 
 file_storage: gcloud_storage
 gcloud_storage:
@@ -40,8 +44,10 @@ gcloud_storage:
     $env: GC_PROJECT
   bucket:
     $env: GCS_BUCKET
+  keyDir:
+    $resolvePath: ../keys
   keyFilename:
-    $resolvePath: <key_file_for_gc>
+    $env: KEY_FILE_FOR_GC  
 
 render_temp_dir:
   $resolvePath: ../temp

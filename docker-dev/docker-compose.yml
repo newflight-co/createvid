@@ -1,0 +1,18 @@
+version: "3.6"
+
+services:
+  postgres:
+    image: postgres:11.4-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: createvid
+      POSTGRES_USER: createvid
+
+  rabbit:
+    image: rabbitmq:3.7.17-management-alpine
+    hostname: rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
