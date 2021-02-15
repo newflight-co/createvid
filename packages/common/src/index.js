@@ -1,3 +1,4 @@
+import dotenv from 'dotenv/config'
 import channel from './channel';
 import config from './config';
 import constants from './constants';

@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 
 let dbm;
 let type;
@@ -18,13 +18,14 @@ exports.setup = function (options, seedLink) {
   seed = seedLink;
   Promise = options.Promise;
 };
-
+const userRegex = '{ADMIN_EMAIL}'
 exports.up = function (db) {
   const filePath = path.join(__dirname, 'sqls', '20190815122846-CreateInisialAccounts-up.sql');
   return new Promise(((resolve, reject) => {
     fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
       if (err) return reject(err);
-      console.log(`received data: ${data}`);
+      data = data.replace(userRegex, process.env.ADMIN_EMAIL)
+      console.log(`>> received data: ${data}`);
 
       resolve(data);
     });
