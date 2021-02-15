@@ -8,6 +8,7 @@ const unlink = util.promisify(fs.unlink);
 
 class GCStorage {
   constructor(){
+    console.log('>>>>>>>> ',config.gcloud_storage,config.gcloud_storage.bucket)
     this.GCLOUD_BUCKET = config.gcloud_storage.bucket;
     this.GCLOUD_PROJECT = config.gcloud_storage.project;
     let storage = this.storage = new Storage({

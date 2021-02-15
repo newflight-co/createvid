@@ -5,6 +5,7 @@
     "lerna": "^3.4.3"
   },
   "scripts": {
-    "dev": "lerna bootstrap && lerna run dev --parallel"
+    "dev": "lerna bootstrap && lerna run dev --parallel",
+    "db:up": "cd ./packages/server && npm run db:up"
   }
 }

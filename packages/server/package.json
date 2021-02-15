@@ -6,6 +6,7 @@
   "scripts": {
     "server:start": "node src/esm.js",
     "server:migrations": "db-migrate up",
+    "db:up": "db-migrate up",
     "dev": "nodemon -w src/ -e js src/esm.js",
     "lint": "eslint .",
     "lint:ci": "eslint .",

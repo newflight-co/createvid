@@ -21,9 +21,11 @@ queue:
   url: amqp://localhost
 
 auth:
-  idSecret: "top secret1"
-  accessSecret: "secret1"
-
+  idSecret: 
+    $env: AUTH_ID_SECRET 
+  accessSecret: 
+    $env: AUTH_ACCESS_SECRET
+    
 mailing:
   sendgrid_key: 
     $env: SENDGRID_KEY

@@ -4,21 +4,21 @@ import path from 'path';
 
 const schema = Joi.object().keys({
   logs: Joi.object().keys({
-    sentry: Joi.string().uri({scheme: ['https']}).optional(),
+    sentry: Joi.string().uri({ scheme: ['https'] }).optional(),
     level: Joi.string()
       .allow('error', 'warn', 'info', 'verbose', 'debug', 'silly')
       .default('info'),
     format: Joi.string()
       .allow('simple', 'json')
       .default('simple'),
-  }).default({level: 'info', format: 'simple'}),
+  }).default({ level: 'info', format: 'simple' }),
   server: Joi.object().keys({
-    app_endpoint: Joi.string().uri({scheme: ['http', 'https']}).default("http://localhost:8080/"),
+    app_endpoint: Joi.string().uri({ scheme: ['http', 'https'] }).default("http://localhost:8080/"),
     port: Joi.number().port().default(8000)
   }).required(),
   database: Joi.alternatives().try(
     Joi.object().keys({
-      connectionString: Joi.string().uri({scheme: ['postgres']}),
+      connectionString: Joi.string().uri({ scheme: ['postgres'] }),
     }),
     Joi.object().keys({
       user: Joi.string(),
@@ -29,7 +29,7 @@ const schema = Joi.object().keys({
     })
   ),
   queue: Joi.object().keys({
-    url: Joi.string().uri({scheme: ['amqp']}),
+    url: Joi.string().uri({ scheme: ['amqp'] }),
     opts: Joi.any()
   }),
   auth: Joi.object().keys({
@@ -43,11 +43,12 @@ const schema = Joi.object().keys({
     type: Joi.string().valid('nexrender', 'fakerender').default('nexrender'),
     tasksDir: Joi.string().default(path.resolve(path.join(__dirname, "../temp"))),
   }),
-  cdn: Joi.string().uri({scheme: ['http', 'https']}),
+  cdn: Joi.string().uri({ scheme: ['http', 'https'] }),
   file_storage: Joi.string().allow('gcloud_storage').default('gcloud_storage'),
   gcloud_storage: Joi.object().keys({
     project: Joi.string(),
     bucket: Joi.string(),
+    keyDir: Joi.string(),
     keyFilename: Joi.string(),
   }).required(),
   render_temp_dir: Joi.string().default(path.join(__dirname, '../temp')),
@@ -67,6 +68,7 @@ const schema = Joi.object().keys({
 });
 
 const CONFIG = process.env.CONFIG || process.env.NODE_ENV || 'development';
-console.log('Loading config for: ' + CONFIG);
-export default ConfigLoader(schema).load(path.join(`../../config/${CONFIG}.yml`));
+console.log('Loading config for: ' + CONFIG, process.env.CONFIG, process.env.NODE_ENV);
+console.log('2', path.join(`../../config/${CONFIG}.yml`), path.resolve(__dirname, `../../../config/${CONFIG}.yml`))
+export default ConfigLoader(schema).load(path.resolve(__dirname, `../../../config/${CONFIG}.yml`));//path.join(`../../config/${CONFIG}.yml`)
 

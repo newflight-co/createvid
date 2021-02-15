@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "driver": "pg",
+        "user": "createvid",
+        "password": "example",
+        "host": "localhost",
+        "database": "createvid",
+        "port": "5432"
+    }
+}
