@@ -2,6 +2,7 @@ import util from 'util';
 import fs from 'fs';
 import {Storage} from '@google-cloud/storage';
 import moment from 'moment';
+import unzipper from 'unzipper'
 import config from './config';
 
 const unlink = util.promisify(fs.unlink);
@@ -113,6 +114,11 @@ class GCStorage {
       .getSignedUrl({responseDisposition: 'attachment', action: 'read', expires: moment().add(5, 'm')})
       .then(ret => console.log(ret) || ret)
       .then(ret=>ret[0]);
+  }
+  async unzip(zipPath){
+    return fs.createReadStream(zipPath)
+    .pipe(unzipper.Extract({ path: 'output/path' }))
+    .promise();
   }
 }
 

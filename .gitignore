@@ -71,3 +71,5 @@ database/
 
 multirender\.api/public/
 config/CodeCat-d53f1e60641e.json
+
+keys/*.json
