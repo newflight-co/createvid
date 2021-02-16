@@ -24,9 +24,18 @@ class TemplatesController extends RouterController {
 
   async generateCSVTemplate(req, res, next) {
     // const fields = await TaskService.getAllTemplateFields(req.context.templateId, req.user);
-    const csv = await TemplateService.getTemplateCSV(req.context.templateId)
+    // res.set('Content-Type', 'text/csv');
     res.set('Content-Type', 'text/csv');
-    res.send(csv);
+    // // eslint-disable-next-line no-useless-escape
+    res.set('Content-Disposition', `attachment; filename=\"${req.context.templateId}.csv\"`);
+    res.set('Cache-Control', 'no-cache');
+    const s = await TemplateService.getTemplateCSV(req.context.templateId)
+    
+    res.send(Buffer.from(s))
+    // res.status(200)
+    //     .attachment(`name.txt`)
+    //     .send('This is the content')
+    // s.end()
   }
 }
 

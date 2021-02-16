@@ -4,11 +4,17 @@ import _ from 'lodash'
 
 async function generate(data){
     return new Promise((resolve, reject) => {
-        stringify(data, {header: true},function(err, output){
-            if(err) reject(err);
-            resolve(output)
-          })
+        const dataProcessed = _.map(data, (i) => {
+            const res = _.pick(i, ['layerName', 'type', 'displayName', 'required'])
+            res.Source = null;
+            return res
+        })
+        stringify(dataProcessed, {header: true}, (err, out) => {
+            if(err) return reject(err);
+            resolve(out)
+        })
     })
+    
 }
 
 function prs(input){
@@ -25,14 +31,6 @@ function prs(input){
         console.log(e)
       })
 }
-
-const data = [ // example transformations / displayName = frontend field label / chapterMarker = preview timecode
-    { type: "text", layerName: "CLIENT_NAME", property: "Source Text", displayName: "Customer Name", titleField: true, required: true, chapterMarker: "1.5" },
-    { type: "image", layerName: "clientLogo.png", composition: "*", displayName: "Customer Logo", required: true, chapterMarker: "1.5" },
-    { type: "colour", layerName: "BRAND_PRIMARY", property: "Source Text", displayName: "Primary Background", required: true, chapterMarker: "19" },
-    { type: "audio", layerName: "audio_intro.wav", composition: "*", displayName: "Introduction Audio", required: true },
-    { type: "image", layerName: "mobileLogin.jpg", composition: "*", displayName: "Mobile Login", required: true, chapterMarker: "25"}
-]
 
 // generateCSV(data)
 

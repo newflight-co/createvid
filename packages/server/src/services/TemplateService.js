@@ -38,12 +38,11 @@ class TemplatesService {
     return templates.getTemplateFields(template);
   }
 
-  static getTemplateCSV(templateId){
+  static async getTemplateCSV(templateId){
     const template = templates.getById(templateId);
     const fields =  templates.getTemplateFields(template);
     console.log('fields', fields)
-    const csv = await CSVService.generate(fields)
-    return csv;
+    return CSVService.generate(fields);
   }
 }
 
