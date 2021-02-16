@@ -1,4 +1,5 @@
 import TaskService from '../services/TaskService';
+import TemplateService from '../services/TemplateService'
 
 import RouterController from './details/RouterController';
 import tasks from './tasks';
@@ -22,9 +23,10 @@ class TemplatesController extends RouterController {
   }
 
   async generateCSVTemplate(req, res, next) {
-    const fields = await TaskService.getAllTemplateFields(req.context.templateId, req.user);
+    // const fields = await TaskService.getAllTemplateFields(req.context.templateId, req.user);
+    const csv = await TemplateService.getTemplateCSV(req.context.templateId)
     res.set('Content-Type', 'text/csv');
-    res.send(fields.map((field) => `${field.layerName}[${field.type}]`).join(';'));
+    res.send(csv);
   }
 }
 

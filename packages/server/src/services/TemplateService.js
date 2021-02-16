@@ -1,5 +1,5 @@
 import { templates } from '@createvid/common';
-
+import CSVService from './CsvService'
 import NotFound from '../errors/NotFound';
 
 
@@ -36,6 +36,14 @@ class TemplatesService {
       throw new NotFound('Template was not found!');
     }
     return templates.getTemplateFields(template);
+  }
+
+  static getTemplateCSV(templateId){
+    const template = templates.getById(templateId);
+    const fields =  templates.getTemplateFields(template);
+    console.log('fields', fields)
+    const csv = await CSVService.generate(fields)
+    return csv;
   }
 }
 
