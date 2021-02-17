@@ -16,6 +16,7 @@ class ApiService {
   buildFormData (video) {
     const formData = new FormData()
     Object.keys(video).forEach(key => {
+      console.log('typeof video[key]', typeof video[key])
       if (typeof video[key] === 'string') {
         formData.append(key, video[key])
       } else {
@@ -89,9 +90,10 @@ class ApiService {
       url: '/users/' + id + '/welcome'
     })
   }
-  async createTask (templateId, video) {
+  async createTask (templateId, video, isZip) {
+    console.log(' >> ', templateId, video)
     const formData = this.buildFormData(video)
-    return this.makeRequest(templateId, formData)
+    return this.makeRequest(templateId, formData, isZip)
   }
 
   async apiCall ({ headers, method, url, data }) {
@@ -107,7 +109,7 @@ class ApiService {
     })
   }
 
-  async makeRequest (templateId, formData) {
+  async makeRequest (templateId, formData, isZip) {
     const accessToken = await AuthService.getAccessToken()
     if (!accessToken) {
       return
@@ -116,7 +118,7 @@ class ApiService {
       headers: { Authorization: `Bearer ${accessToken}` },
       method: 'POST',
       timeout: 60000,
-      url: '/templates/' + templateId + '/tasks',
+      url: '/templates/' + templateId + '/tasks' + (isZip ? '/zip' : ''),
       data: formData
     })
   }

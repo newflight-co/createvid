@@ -50,7 +50,10 @@ gcloud_storage:
     $env: KEY_FILE_FOR_GC  
 
 render_temp_dir:
-  $resolvePath: ../temp
+  $resolvePath: ../temp/render
+
+render_upload_dir:
+  $resolvePath: ../temp/upload
 
 templates_directory:
   $resolvePath: ../templates

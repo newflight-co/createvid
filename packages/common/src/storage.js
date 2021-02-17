@@ -1,5 +1,6 @@
 import util from 'util';
 import fs from 'fs';
+import path from 'path'
 import {Storage} from '@google-cloud/storage';
 import moment from 'moment';
 import unzipper from 'unzipper'
@@ -12,10 +13,11 @@ class GCStorage {
     
     this.GCLOUD_BUCKET = config.gcloud_storage.bucket;
     this.GCLOUD_PROJECT = config.gcloud_storage.project;
+    const kfn = (config.gcloud_storage.keyDir && config.gcloud_storage.keyFilename) ? path.resolve(config.gcloud_storage.keyDir, config.gcloud_storage.keyFilename) : null;
     let storage = this.storage = new Storage({
       projectId: this.GCLOUD_PROJECT,
-      keyFilename: config.gcloud_storage.keyFilename
-        ? config.gcloud_storage.keyFilename
+      keyFilename: kfn
+        ? kfn
         : undefined,
       credentials: config.gcloud_storage.credentials
     });

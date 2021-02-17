@@ -39,7 +39,7 @@ class AuthService {
       if (token) {
         const user = await this.findUserByEmail(token.email);
         const accessToken = await this.generateAccessToken(user);
-        return { accessToken, expiresIn: 60 };
+        return { accessToken, expiresIn: 6000 };
       }
     } catch (err) {
       throw new AuthError('Token expired');
@@ -53,7 +53,7 @@ class AuthService {
     if (user && new Date(user.codeexpires).getTime() > new Date().getTime()) {
       const accessToken = await this.generateAccessToken(user, domain);
       const idToken = await this.generateIdToken(user, domain);
-      return { accessToken, idToken, expiresIn: 60 };
+      return { accessToken, idToken, expiresIn: 6000 };
     }
     throw new AuthError('Wrong code');
   }
@@ -61,7 +61,7 @@ class AuthService {
 
   async generateIdToken(user, domain) {
     const { idSecret } = config.auth;
-    return jwt.sign({ email: user.email, domain: domain ? domain.id : null }, idSecret, { expiresIn: '24h' });
+    return jwt.sign({ email: user.email, domain: domain ? domain.id : null }, idSecret, { expiresIn: '224h' });
   }
 
   async generateAccessToken(user, domain) {

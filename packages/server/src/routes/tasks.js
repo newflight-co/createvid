@@ -12,6 +12,7 @@ import RouterController from './details/RouterController';
 class TasksController extends RouterController {
   install(router) {
     const upload = this.createUploader();
+    const zipUpload = this.createZipUploader()
     router.param('taskId', this.putParamInContext('taskId'));
     router.get('/', this.forwardError(this.getAllByTemplateId));
     router.post('/',
@@ -19,6 +20,11 @@ class TasksController extends RouterController {
       upload.any(),
       AssetsValidationService.validate,
       this.forwardError(this.create));
+    router.post('/zip', 
+      this.forwardError(this.prepare),
+      zipUpload.any(),
+      // AssetsValidationService.validate,
+      this.forwardError(this.create));  
     router.post('/:taskId', this.forwardError(this.restart));
     router.delete('/:taskId', this.forwardError(this.deleteTask));
   }
@@ -40,11 +46,12 @@ class TasksController extends RouterController {
   };
 
   create = async (req, res, next) => {
-    const taskInfo = this.getTaskInfo(req, res);
-    await TaskService.createTaskEntry(taskInfo);
-    await res.json({ message: 'Task enqueued successfully!' });
-    await TaskService.uploadTask(taskInfo, req);
-    await TaskService.pushTaskToQueue(taskInfo);
+    console.log('QQ', req.file, ":", req.files)
+    // const taskInfo = this.getTaskInfo(req, res);
+    // await TaskService.createTaskEntry(taskInfo);
+    // await res.json({ message: 'Task enqueued successfully!' });
+    // await TaskService.uploadTask(taskInfo, req);
+    // await TaskService.pushTaskToQueue(taskInfo);
   };
 
   restart = async (req, res, next) => {
@@ -94,6 +101,24 @@ class TasksController extends RouterController {
       },
     });
   };
+
+  createZipUploader = () => {
+    var storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, path.join(config.render_upload_dir, req.renderTask.dir))
+      },
+      filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now()+'.zip')
+      }
+    })
+    return multer({
+      storage,
+      onError(err, next) {
+        logger.error('error', err);
+        next(err);
+      },
+    });
+  }
 }
 
 export default async () => (new TasksController()).createRouter();

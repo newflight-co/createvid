@@ -27,7 +27,7 @@
             Upload your csv file with the template data.
             <csvInput displayName="Template File" @updateInput="csvFile = $event" />
             <q-stepper-navigation>
-                <q-btn @click="step = 3" color="primary" :disabled="!csvFile" label="Upload" />
+                <q-btn @click="upload" color="primary" :disabled="!csvFile" label="Upload" />
                 <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
             </q-stepper-navigation>
         </q-step>
@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import { mapActions } from 'vuex'
 
-import AuthService from '../../services/auth.service'
+// import AuthService from '../../services/auth.service'
 
 import csvInput from 'components/new/input-types/csv-input.vue'
 
@@ -74,8 +74,13 @@ export default {
   },
   methods: {
     ...mapActions('templates', [
-      'getTemplateCSV'
+      'getTemplateCSV', 'uploadCSV'
     ]),
+    upload () {
+      this.uploadCSV({ file: this.csvFile, templateId: this.template.id }).then((d) => {
+        this.step = 3
+      })
+    }
     // async downloadCsv () {
     //   // getTemplateCSV()
     //   const accessToken = await AuthService.getAccessToken()
@@ -102,23 +107,23 @@ export default {
     //     this.step = 2
     //   })
     // },
-    async uploadCsv (e) {
-      const formData = new FormData()
-      const accessToken = await AuthService.getAccessToken()
-      if (!accessToken) {
-        return
-      }
-      await axios({
-        headers: { Authorization: `Bearer ${accessToken}` },
-        method: 'POST',
-        url: '/api/csvimport/',
-        data: formData
-      }).then((res) => {
-        if (res.data === 'success') {
-          this.validated = true
-        }
-      })
-    }
+  //   async uploadCsv (e) {
+  //     const formData = new FormData()
+  //     const accessToken = await AuthService.getAccessToken()
+  //     if (!accessToken) {
+  //       return
+  //     }
+  //     await axios({
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //       method: 'POST',
+  //       url: '/api/csvimport/',
+  //       data: formData
+  //     }).then((res) => {
+  //       if (res.data === 'success') {
+  //         this.validated = true
+  //       }
+  //     })
+  //   }
   }
 }
 </script>
