@@ -117,9 +117,9 @@ class GCStorage {
       .then(ret => console.log(ret) || ret)
       .then(ret=>ret[0]);
   }
-  async unzip(zipPath){
+  async unzip(zipPath, outPath){
     return fs.createReadStream(zipPath)
-    .pipe(unzipper.Extract({ path: 'output/path' }))
+    .pipe(unzipper.Extract({ path: outPath ? outPath : 'output/path' }))
     .promise();
   }
 }

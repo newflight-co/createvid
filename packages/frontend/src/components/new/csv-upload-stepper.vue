@@ -25,7 +25,7 @@
             :done="step > 2"
         >
             Upload your csv file with the template data.
-            <csvInput displayName="Template File" @updateInput="csvFile = $event" />
+            <csvInput displayName="Zip File" @updateInput="csvFile = $event" />
             <q-stepper-navigation>
                 <q-btn @click="upload" color="primary" :disabled="!csvFile" label="Upload" />
                 <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />

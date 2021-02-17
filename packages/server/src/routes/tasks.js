@@ -1,5 +1,6 @@
-import { config, logger } from '@createvid/common';
+import { config, logger, storage } from '@createvid/common';
 import path from 'path';
+import fs from 'fs';
 import multer from 'multer';
 import { mkdirp } from 'fs-extra';
 
@@ -23,7 +24,9 @@ class TasksController extends RouterController {
     router.post('/zip', 
       this.forwardError(this.prepare),
       zipUpload.any(),
+      this.forwardError(this.unzip),
       // AssetsValidationService.validate,
+      this.forwardError(this.uploadZipToGS),
       this.forwardError(this.create));  
     router.post('/:taskId', this.forwardError(this.restart));
     router.delete('/:taskId', this.forwardError(this.deleteTask));
@@ -82,6 +85,37 @@ class TasksController extends RouterController {
     next();
   };
 
+  unzip = async(req, res, next) => {
+    console.log('unziping', req.files)
+    const file = req.files[0]
+    await storage.unzip(file.path, file.destination)
+    console.log('unziped')
+    next();
+  }
+
+  uploadZipToGS = async(req, res, next) => {
+    //read dir
+    console.log('uploading')
+    //const files = fs.readdirSync(req.files[0].destination)
+    const dirents = fs.readdirSync(req.files[0].destination, { withFileTypes: true });
+    const files = dirents
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name);
+    console.log('found files: ', files)
+    const promises = files.map((file) => {
+      console.log('uploading file:', file)
+      return storage.upload(path.resolve(req.files[0].destination, file),`${req.renderTask.dir}/${file}`)
+    })
+    Promise.all(promises)
+    .then((results) => {
+        console.log('Results: ', results)
+        next()
+    })
+    //each upload
+
+    // next();
+  }
+
   createUploader = () => {
     const storage = MulterStorageGCS({
       destination: (req, file, cb) => {
@@ -105,7 +139,9 @@ class TasksController extends RouterController {
   createZipUploader = () => {
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
-        cb(null, path.join(config.render_upload_dir, req.renderTask.dir))
+        const distPath = path.join(config.render_upload_dir, req.renderTask.dir)
+        fs.mkdirSync(distPath, { recursive: true })
+        cb(null, distPath)
       },
       filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now()+'.zip')
