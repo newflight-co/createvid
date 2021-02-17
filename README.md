@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/18214954/108244875-96b51a80-7147-11eb-882e-cb2987820ab1.png" />
+</p>
 ---
 ## Local Environments
 - Create epmty .env file and put it into ~/packages/server and ~/packages/worker
