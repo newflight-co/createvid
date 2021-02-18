@@ -1,15 +1,25 @@
 import { config, logger, storage } from '@createvid/common';
 import path from 'path';
 import fs from 'fs';
+import _ from 'lodash'
 import multer from 'multer';
 import { mkdirp } from 'fs-extra';
 
 import TaskService from '../services/TaskService';
 import AssetsValidationService from '../services/AssetsValidationService';
+import CSVService from '../services/CsvService'
 import MulterStorageGCS from '../utils/MulterStorageGCS';
 
 import RouterController from './details/RouterController';
 
+function getFiles(dir){
+  const dirents = fs.readdirSync(dir, { withFileTypes: true });
+  const files = dirents
+    .filter(dirent => dirent.isFile())
+    .map(dirent => dirent.name);
+  return files;
+}
+var extensionRegex = /(?:\.([^.]+))?$/;
 class TasksController extends RouterController {
   install(router) {
     const upload = this.createUploader();
@@ -25,7 +35,7 @@ class TasksController extends RouterController {
       this.forwardError(this.prepare),
       zipUpload.any(),
       this.forwardError(this.unzip),
-      // AssetsValidationService.validate,
+      this.forwardError(this.validateZipAndPrepare),
       this.forwardError(this.uploadZipToGS),
       this.forwardError(this.create));  
     router.post('/:taskId', this.forwardError(this.restart));
@@ -50,11 +60,11 @@ class TasksController extends RouterController {
 
   create = async (req, res, next) => {
     console.log('QQ', req.file, ":", req.files)
-    // const taskInfo = this.getTaskInfo(req, res);
-    // await TaskService.createTaskEntry(taskInfo);
-    // await res.json({ message: 'Task enqueued successfully!' });
-    // await TaskService.uploadTask(taskInfo, req);
-    // await TaskService.pushTaskToQueue(taskInfo);
+    const taskInfo = this.getTaskInfo(req, res);
+    await TaskService.createTaskEntry(taskInfo);
+    await res.json({ message: 'Task enqueued successfully!' });
+    await TaskService.uploadTask(taskInfo, req);
+    await TaskService.pushTaskToQueue(taskInfo);
   };
 
   restart = async (req, res, next) => {
@@ -93,27 +103,73 @@ class TasksController extends RouterController {
     next();
   }
 
+  validateZipAndPrepare = async(req, res, next) => {
+    console.log('validation', req.files)
+    const workingPath = req.files[0].destination
+    const files = getFiles(workingPath)
+    const {fileAssets, dataAssets} = AssetsValidationService.getAsssets(req.context.templateId)
+    
+    // if csv exists
+    const csvFile = _.find(files, (file) => {
+      return extensionRegex.exec(file)[1] === 'csv'
+    }) 
+    if(!csvFile) return next(new Error('no csv found'))
+
+    const csv = await CSVService.read(path.join(workingPath, csvFile))
+    if(!csv) return next(new Error('no valid csv '))
+    console.log('CSV', csv)
+    console.log('fileAssets', fileAssets)
+    _.every(fileAssets, (asset) => {
+      const row = _.find(csv, {layerName: asset.layerName})
+      console.log('TEST CSV row', row)
+      if (!row){
+        next(new Error('no row in CSV for '+ asset.displayName)) 
+        return false
+      }
+      
+      // if(row.required && !row.source) {
+      //   next(new Error('no source set for '+ row.displayName)) 
+      //   return false
+      // }
+      const rowFilename = row.source || row.layerName
+      const rowFile = fs.existsSync(path.join(workingPath, rowFilename))
+      if(!rowFile) {
+        next(new Error('no source file for '+ row.displayName)) 
+        return false
+      }
+      //rename
+      const ext = extensionRegex.exec(rowFilename)[1]
+      const filename = rowFilename.replace(extensionRegex, '')
+      console.log('filename, ext', filename, ext)
+      fs.renameSync(path.join(workingPath, rowFilename), path.join(workingPath, row.layerName+'.'+ext))
+      return true
+    })
+    
+    
+    console.log('validated')
+    next();
+  }
+
   uploadZipToGS = async(req, res, next) => {
-    //read dir
     console.log('uploading')
-    //const files = fs.readdirSync(req.files[0].destination)
-    const dirents = fs.readdirSync(req.files[0].destination, { withFileTypes: true });
-    const files = dirents
-      .filter(dirent => dirent.isFile())
-      .map(dirent => dirent.name);
+    const files = getFiles(req.files[0].destination)
     console.log('found files: ', files)
     const promises = files.map((file) => {
       console.log('uploading file:', file)
+      const ext = extensionRegex.exec(file)[1]
+      
+      if(ext === 'zip' || ext === 'csv'){
+        console.log(file,'skiped')
+        return Promise.resolve(null)
+      }
+      console.log(file, 'uploaded')
       return storage.upload(path.resolve(req.files[0].destination, file),`${req.renderTask.dir}/${file}`)
     })
     Promise.all(promises)
     .then((results) => {
         console.log('Results: ', results)
-        next()
     })
-    //each upload
-
-    // next();
+    next()
   }
 
   createUploader = () => {
