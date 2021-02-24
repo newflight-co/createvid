@@ -7,6 +7,8 @@
     - Node
     - Docker
     - ffmpeg
+    - python2 
+    - visual studio (wins)
 
 
 # Setup Google Storage
@@ -40,9 +42,16 @@
 
 # Preparing worker machine
     
+    - install python 2
+    - 
     - install ffmpeg
+    - Add essential envorentment variables (dont forget to restart shell after that to make changes live):
+        - WORKER_ID - just a uniq string ID of the worker
+        - NEXRENDER_FFMPEG - path to ffmeg (more likely is C:\ffmpeg\bin\ffmpeg.exe)
+        - NODE_ENV=production
+    
 
-# Run docker with Queue and DB service. 
+# Run docker with Queue and DB service for development. 
 Run docker service first then run following commands to run containers
 
 `$cd docker-dev`
@@ -50,6 +59,9 @@ Run docker service first then run following commands to run containers
 
 # Run server, worker and front-ends
 `npm run dev` or `yarn dev`
+
+# If you want to run only worker
+`npm run worker`
 
 
 ## Usage

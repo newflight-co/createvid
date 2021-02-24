@@ -6,6 +6,7 @@
   },
   "scripts": {
     "dev": "lerna bootstrap && lerna run dev --parallel",
+    "worker": "lerna bootstrap && lerna run worker --parallel",
     "db:up": "cd ./packages/server && npm run db:up"
   }
 }

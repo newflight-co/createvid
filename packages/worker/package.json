@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/esm.js",
+    "worker": "node src/esm.js",
     "test": "mocha -r esm",
     "test:ci": "mocha -r esm",
     "dev": "nodemon -w src/ -e js src/esm.js",
