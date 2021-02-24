@@ -5,7 +5,7 @@ import { channel, config, logger } from '@createvid/common';
 import createApp from './app';
 import SocketService from './services/SocketService';
 import TaskStatusService from './services/TaskStatusService';
-// import WorkersService from './services/WorkersService';
+
 
 const initApp = async () => {
   try {

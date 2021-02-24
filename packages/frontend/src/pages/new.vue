@@ -5,17 +5,17 @@
         <PageTitle title="Create New"/>
         <PageActions cancel text="Create" @btn-click="submitForm()" :isDisabled="!allValidated" :loading="uploading"/>
       </div>
-
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-7 q-mt-lg q-mt-md-none">
-          <!-- <q-tabs
+
+          <q-tabs
             v-model="tab"
             align="justify"
             class="bg-white text-primary gt-sm"
           >
             <q-tab name="individual" label="Individual" />
             <q-tab name="list" label="Upload List" />
-          </q-tabs> -->
+          </q-tabs>
 
           <q-tab-panels
             v-model="tab"
@@ -166,3 +166,11 @@ export default {
   }
 }
 </script>
+<style lang="stylus" scoped>
+.csv-button-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 0px 20pxl
+  justify-content: flex-end;
+}
+</style>

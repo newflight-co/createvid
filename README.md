@@ -6,10 +6,14 @@
 
     - Node
     - Docker
+    - ffmpeg
+
 
 # Setup Google Storage
 
 - Put GCloudStorage Key in ~/keys/
+
+# Before start
 
 - Add varables in both .env fiiles 
     
@@ -32,9 +36,11 @@
 
 - seed the database. To do that just run `npm run db:up`
  or `yarn db:up`
- 
-## Install and run
 
+
+# Preparing worker machine
+    
+    - install ffmpeg
 
 # Run docker with Queue and DB service. 
 Run docker service first then run following commands to run containers

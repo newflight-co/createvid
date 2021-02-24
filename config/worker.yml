@@ -7,7 +7,7 @@ logs:
   format: simple
 
 render:
-  type: nexrender
+  type: fakerender #nexrender
   tasksDir:
     $resolvePath: ../temp
 

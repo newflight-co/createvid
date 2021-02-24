@@ -42,6 +42,12 @@ class AssetsValidationService {
       next(err);
     }
   }
+  static getAsssets(templateId){
+    const assets = AssetsValidationService.loadConfig(templateId);
+    const fileAssets = assets.filter((asset) => FILE_ASSETS.includes(asset.type));
+    const dataAssets = assets.filter((asset) => DATA_ASSETS.includes(asset.type));
+    return {fileAssets, dataAssets}
+  }
 }
 
 export default AssetsValidationService;

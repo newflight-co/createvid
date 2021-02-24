@@ -51,7 +51,8 @@ const schema = Joi.object().keys({
     keyDir: Joi.string(),
     keyFilename: Joi.string(),
   }).required(),
-  render_temp_dir: Joi.string().default(path.join(__dirname, '../temp')),
+  render_temp_dir: Joi.string().default(path.join(__dirname, '../temp/render')),
+  render_upload_dir: Joi.string().default(path.join(__dirname, '../temp/upload')),
   templates_directory: Joi.string().default(path.join(__dirname, '../templates')),
   templates: Joi.object().pattern(/.*/, Joi.object().keys({
     id: Joi.string().required(),
