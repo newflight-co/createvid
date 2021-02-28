@@ -1,7 +1,4 @@
 ---
-## Local Environments
-- Create epmty .env file and put it into ~/packages/server and ~/packages/worker
-
 ## Prerequirements
 
     - Node
@@ -16,8 +13,10 @@
 - Put GCloudStorage Key in ~/keys/
 
 # Before start
+## Local Environments
 
-- Add varables in both .env fiiles 
+- Create .env file in into ~/
+- Add varables in .env fiile:
     
     For Dev:
 
