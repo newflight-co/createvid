@@ -21,9 +21,9 @@ queue:
   url: amqp://localhost
 
 auth:
-  idSecret: 
+  idSecret:
     $env: AUTH_ID_SECRET 
-  accessSecret: 
+  accessSecret:
     $env: AUTH_ACCESS_SECRET
     
 mailing:
