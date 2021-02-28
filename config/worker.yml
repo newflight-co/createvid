@@ -22,3 +22,9 @@ queue:
     passphrase:
     ca:
     - $resolvePath: ../keys/cacert.pem
+
+auth:
+  idSecret: 
+    $env: AUTH_ID_SECRET 
+  accessSecret: 
+    $env: AUTH_ACCESS_SECRET
