@@ -25,6 +25,6 @@ queue:
 
 auth:
   idSecret:
-    $env: AUTH_ID_SECRET 
+    $env: AUTH_ID_SECRET
   accessSecret:
     $env: AUTH_ACCESS_SECRET
