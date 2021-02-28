@@ -26,6 +26,7 @@
     "@nexrender/core": "1.8.2",
     "bluebird": "3.5.5",
     "commander": "3.0.0",
+    "dotenv": "^8.2.0",
     "esm": "3.2.25",
     "file-url": "3.0.0",
     "mime": "2.4.4",
