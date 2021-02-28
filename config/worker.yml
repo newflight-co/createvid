@@ -24,7 +24,7 @@ queue:
     - $resolvePath: ../keys/cacert.pem
 
 auth:
-  idSecret: 
+  idSecret:
     $env: AUTH_ID_SECRET 
-  accessSecret: 
+  accessSecret:
     $env: AUTH_ACCESS_SECRET
