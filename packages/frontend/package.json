@@ -7,7 +7,7 @@
   "author": "Tim Knight <tim@newflightpictures.com>",
   "private": true,
   "scripts": {
-    "build-frontend": "quasar build",
+    "build-frontend": "quasar build -m spa",
     "dev": "quasar dev",
     "build": "quasar build",
     "lint": "eslint --ext .js,.vue src",
