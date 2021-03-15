@@ -1,4 +1,10 @@
----
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/18214954/108244875-96b51a80-7147-11eb-882e-cb2987820ab1.png" />
+</p>
+
+## Local Environments
+- Create epmty .env file and put it into ~/packages/server and ~/packages/worker
+
 ## Prerequirements
 
     - Node
@@ -6,7 +12,6 @@
     - ffmpeg
     - python2 
     - visual studio (wins)
-
 
 # Setup Google Storage
 
@@ -38,7 +43,6 @@
 - seed the database. To do that just run `npm run db:up`
  or `yarn db:up`
 
-
 # Preparing worker machine
     
     - install python 2
@@ -61,6 +65,24 @@ Run docker service first then run following commands to run containers
 
 # If you want to run only worker
 `npm run worker`
+
+
+## Usage
+
+Open `http://localhost:8080` 
+enter
+ 
+## Install and run
+
+
+# Run docker with Queue and DB service. 
+Run docker service first then run following commands to run containers
+
+`$cd docker-dev`
+`$docker-compose up`
+
+# Run server, worker and front-ends
+`npm run dev` or `yarn dev`
 
 
 ## Usage

@@ -17,9 +17,9 @@ render:
     $resolvePath: ../temp
 
 auth:
-  idSecret:
-    $env: AUTH_ID_SECRET
-  accessSecret:
+  idSecret: 
+    $env: AUTH_ID_SECRET 
+  accessSecret: 
     $env: AUTH_ACCESS_SECRET
 
 #rabbitmq credentials

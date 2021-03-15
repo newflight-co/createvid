@@ -65,7 +65,6 @@ typings/
 
 .idea/
 temp/*
-templates
 results/*
 database/
 

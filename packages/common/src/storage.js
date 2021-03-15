@@ -10,7 +10,7 @@ const unlink = util.promisify(fs.unlink);
 
 class GCStorage {
   constructor(){
-    
+    console.log('>>>>>>>> ',config.gcloud_storage,config.gcloud_storage.bucket)
     this.GCLOUD_BUCKET = config.gcloud_storage.bucket;
     this.GCLOUD_PROJECT = config.gcloud_storage.project;
     const kfn = (config.gcloud_storage.keyDir && config.gcloud_storage.keyFilename) ? path.resolve(config.gcloud_storage.keyDir, config.gcloud_storage.keyFilename) : null;
@@ -117,9 +117,9 @@ class GCStorage {
       .then(ret => console.log(ret) || ret)
       .then(ret=>ret[0]);
   }
-  async unzip(zipPath, outPath){
+  async unzip(zipPath){
     return fs.createReadStream(zipPath)
-    .pipe(unzipper.Extract({ path: outPath ? outPath : 'output/path' }))
+    .pipe(unzipper.Extract({ path: 'output/path' }))
     .promise();
   }
 }

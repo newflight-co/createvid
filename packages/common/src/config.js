@@ -70,5 +70,5 @@ const schema = Joi.object().keys({
 
 const CONFIG = process.env.CONFIG || process.env.NODE_ENV || 'development';
 console.log('Loading config for: ' + CONFIG, process.env.CONFIG, process.env.NODE_ENV);
+console.log('2', path.join(`../../config/${CONFIG}.yml`), path.resolve(__dirname, `../../../config/${CONFIG}.yml`))
 export default ConfigLoader(schema).load(path.resolve(__dirname, `../../../config/${CONFIG}.yml`));//path.join(`../../config/${CONFIG}.yml`)
-// export default {}
