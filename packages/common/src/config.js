@@ -4,7 +4,7 @@ import path from 'path';
 
 const schema = Joi.object().keys({
   logs: Joi.object().keys({
-    sentry: Joi.string().uri({ scheme: ['https'] }).optional(),
+    // sentry: Joi.string().uri({ scheme: ['https'] }),
     level: Joi.string()
       .allow('error', 'warn', 'info', 'verbose', 'debug', 'silly')
       .default('info'),
@@ -14,7 +14,7 @@ const schema = Joi.object().keys({
   }).default({ level: 'info', format: 'simple' }),
   server: Joi.object().keys({
     app_endpoint: Joi.string().uri({ scheme: ['http', 'https'] }).default("http://localhost:8080/"),
-    port: Joi.number().port().default(8000)
+    port: Joi.number().port().default(8081)
   }).required(),
   database: Joi.alternatives().try(
     Joi.object().keys({

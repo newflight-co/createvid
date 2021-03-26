@@ -93,7 +93,7 @@ module.exports = function (ctx) {
     build: {
       env: {
         API_ENDPOINT: ctx.dev
-          ? JSON.stringify('http://localhost:8000/v1/')
+          ? JSON.stringify('http://localhost:8081/v1/')
           : JSON.stringify(process.env.API_ENDPOINT)
       },
       scopeHoisting: true,

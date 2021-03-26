@@ -15,9 +15,10 @@
     "amqplib": "0.5.5",
     "bluebird": "3.5.5",
     "dotenv": "^8.2.0",
-    "lodash": "4.17.15",
+    "lodash": "^4.17.21",
     "moment": "2.24.0",
     "pg": "7.12.1",
+    "unzipper": "^0.10.11",
     "winston": "3.2.1"
   }
 }

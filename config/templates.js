@@ -5,11 +5,11 @@ module.exports = {
 			title: "Template 1",
 			visibility: "public", // customer ID or ID's who have access / "public" = all customers / "hidden" from all
 			tags: ["test"],
-			url: "..\\..\\statics\\previews\\template1\\preview.mp4", // video preview
-			poster: "..\\..\\statics\\previews\\template1\\poster.png", // thumbnail
+			url: "..\\..\\statics\\previews\\test\\preview.mp4", // video preview
+			poster: "..\\..\\statics\\previews\\test\\poster.png", // thumbnail
 			type: "default",
 			template: {
-				src: "\\template1\\project.aep", // project file
+				src: "\\test\\project.aep", // project file
 				composition: "RENDER", // composition to render
 				outputModule: "Lossless",
 				startFrame: 0,

@@ -7,7 +7,7 @@ logs:
 
 server:
   app_endpoint: http://localhost:8080/
-  port: 8000
+  port: 8081
 
 database:
   user: createvid
