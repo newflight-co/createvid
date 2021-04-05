@@ -1,8 +1,8 @@
 $include: ./common.yml
 
 logs:
-  sentry: 
-    $env: SENTRY_URL
+  # sentry: 
+  #   $env: SENTRY_URL
   level: debug
   format: simple
 

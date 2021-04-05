@@ -3,44 +3,107 @@ version: "3.6"
 services:
   postgres:
     image: postgres:11.4-alpine
+    networks:
+      - overlay
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: example
       POSTGRES_DB: createvid
       POSTGRES_USER: createvid
+      POSTGRES_PASSWORD: example
+    volumes:
+      - "createvid-postgres:/var/lib/postgresql/data"
+    deploy:
+      restart_policy:
+        condition: on-failure
+    
 
   rabbit:
     hostname: rabbit
+    # restart: on-failure
+    networks:
+      - overlay
     ports:
       - 5672:5672
       - 15672:15672
     image: rabbitmq:3.7.17-management-alpine
-
-  api:
-    build: ./apps/api.Dockerfile
     environment:
-      NODE_ENV: development
-      DATABASE_URL: postgres://createvid:example@postgres:5432/createvid
-      APP_ENDPOINT: http://localhost:8080/
-      QUEUE_URL: amqp://rabbit:5672/
-    ports:
-      - 8080:8080
+      RABBITMQ_SSL_CACERTFILE: /keys/cacert.pem
+      RABBITMQ_SSL_CERTFILE: /keys/cert.pem
+      RABBITMQ_SSL_KEYFILE: /keys/key.pem
+      RABBITMQ_DEFAULT_PASS: <RABBITMQ_DEFAULT_PASS>
+    volumes:
+      - createvid-rabbitmq:/var/lib/rabbitmq
+      - createvid-certs:/keys
+    deploy:
+      restart_policy:
+        condition: on-failure
+        
+  api:
+    build: 
+      context: ../
+      dockerfile: ./docker/apps/api.Dockerfile
+    depends_on:
+      - postgres
+      - rabbit
+    networks:
+      - traefikproxy
+      - overlay
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: <DATABASE_URL>
+      APP_ENDPOINT: <APP_ENDPOINT>
+      CDN_URL:  <CDN_URL>
+      GC_PROJECT: <GC_PROJECT>
+      GCS_BUCKET: <GCS_BUCKET>
+      KEY_FILE_FOR_GC: <KEY_FILE_FOR_GC>
+      SENDGRID_KEY: <SENDGRID_KEY>
+      QUEUE_CERT: /keys/cert.pem
+      QUEUE_KEY: /keys/key.pem
+      QUEUE_PASSPHRASE: <RABBITMQ_DEFAULT_PASS>
+      QUEUE_CA: /keys/cacert.pem
+      QUEUE_URL: <QUEUE_URL>
+      AUTH_ID_SECRET: <AUTH_ID_SECRET>
+      AUTH_ACCESS_SECRET: <AUTH_ACCESS_SECRET>
+      ADMIN_EMAIL: <ADMIN_EMAIL>
+    # expose:
+    #   - 8081
     volumes:
       - createvid-certs:/keys
+    deploy:
+      restart_policy:
+        condition: on-failure
+
 
   frontend:
-    build: ./apps/frontend.Dockerfile
+    build: 
+      context: ../
+      dockerfile: ./docker/apps/frontend.Dockerfile
+    depends_on:
+      - postgres
+      - rabbit
+    networks:
+      - traefikproxy
+      - overlay
     environment:
-      NODE_ENV: development
-      API_ENDPOINT: https://localhost:8080/v1/
+      NODE_ENV: production
+      API_ENDPOINT: <API_ENDPOINT>
+    deploy:
+      restart_policy:
+        condition: on-failure
+  
 
-  marketing:
-    build: ./apps/marketing.Dockerfile
-    environment:
-      NODE_ENV: development
+networks:
+  traefikproxy:
+    external: true
+    driver: overlay
+  overlay:
+    driver: overlay
 
 volumes:
   createvid-postgres:
+    external: true
   createvid-rabbitmq:
+    external: true
   createvid-certs:
+    external: true

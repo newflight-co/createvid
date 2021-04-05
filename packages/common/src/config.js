@@ -4,7 +4,7 @@ import path from 'path';
 
 const schema = Joi.object().keys({
   logs: Joi.object().keys({
-    sentry: Joi.string().uri({ scheme: ['https'] }).optional(),
+    // sentry: Joi.string().uri({ scheme: ['https'] }),
     level: Joi.string()
       .allow('error', 'warn', 'info', 'verbose', 'debug', 'silly')
       .default('info'),
