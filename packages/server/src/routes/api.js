@@ -17,11 +17,16 @@ class ApiController extends RouterController {
     router.use('/csvimport', accessCheck, await csvImport());
     router.use('/users', accessCheck, adminOnly, await users());
     router.use('/share', await share());
+    router.get('/heartbeat', this.heartbeat.bind(this));
     router.use('*', this.notFound.bind(this));
   }
 
   async notFound(req, res) {
     await res.status(404).send('No route');
+  }
+
+  async heartbeat(req, res) {
+    await res.status(204).send();
   }
 }
 

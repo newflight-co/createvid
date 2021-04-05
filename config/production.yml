@@ -9,7 +9,7 @@ logs:
 server:
   app_endpoint:
     $env: APP_ENDPOINT
-  port: 8081
+  port: 8000
 
 render:
   type: nexrender
